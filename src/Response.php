@@ -51,6 +51,13 @@ class Response implements Responsable
         return $this;
     }
 
+    public function rootView($rootView)
+    {
+        $this->rootView = $rootView;
+
+        return $this;
+    }
+
     public function toResponse($request)
     {
         $only = array_filter(explode(',', $request->header('X-Inertia-Partial-Data')));
@@ -81,7 +88,7 @@ class Response implements Responsable
 
         foreach ($props as $key => $value) {
             if (str_contains($key, '.')) {
-                Arr::set($props, $key, $value);
+                data_set($props, $key, $value);
                 unset($props[$key]);
             }
         }
